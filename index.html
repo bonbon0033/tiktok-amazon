@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="ja" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0; width: 1080px; height: 1920px;
+        overflow: hidden; background: #0a0a0a;
+        font-family: 'Inter', 'Hiragino Sans', 'Yu Gothic UI', sans-serif;
+        color: #f5f5f5;
+      }
+
+      .bg {
+        position: absolute; inset: 0;
+        width: 1080px; height: 1920px;
+        background:
+          radial-gradient(circle at 50% 25%, rgba(232,255,58,0.08), transparent 55%),
+          radial-gradient(circle at 50% 85%, rgba(34,224,255,0.06), transparent 60%),
+          #0a0a0a;
+      }
+      .grid-overlay {
+        position: absolute; inset: 0;
+        background-image:
+          linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+        background-size: 60px 60px;
+      }
+
+      /* PR badge — regulatory requirement (Amazon Associates 2026-04-20 revision) */
+      .pr-badge {
+        position: absolute; top: 50px; right: 40px;
+        background: rgba(255,52,100,0.92); color: #fff;
+        padding: 12px 26px; border-radius: 28px;
+        font-size: 30px; font-weight: 900;
+        letter-spacing: 2px; z-index: 1000;
+        font-family: 'Inter', sans-serif;
+      }
+
+      .scene { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+      .scene-content {
+        width: 100%; height: 100%;
+        padding: 120px 60px;
+        display: flex; flex-direction: column;
+        box-sizing: border-box;
+      }
+
+      /* HOOK */
+      .scene-hook .scene-content { justify-content: center; align-items: center; gap: 36px; }
+      .hook-bar {
+        width: 880px; height: 110px;
+        background: #1a1a1a; border: 3px solid #2f2f2f;
+        border-radius: 14px; display: flex; align-items: center;
+        padding: 0 32px; gap: 24px;
+      }
+      .hook-bar-icon {
+        width: 40px; height: 40px; border: 4px solid #888;
+        border-radius: 50%; position: relative;
+      }
+      .hook-bar-icon::after {
+        content: ''; position: absolute; right: -14px; bottom: -8px;
+        width: 22px; height: 4px; background: #888; transform: rotate(45deg);
+        border-radius: 2px;
+      }
+      .hook-bar-text { font-size: 44px; font-weight: 800; color: #f5f5f5; }
+      .hook-marker {
+        font-size: 38px; font-weight: 800;
+        color: #ff3464; letter-spacing: 8px;
+      }
+      .hook-title {
+        font-family: 'Anton', 'Inter', sans-serif;
+        font-size: 280px; line-height: 0.82;
+        color: #e8ff3a; letter-spacing: -6px;
+        text-align: center;
+      }
+      .hook-sub {
+        font-size: 60px; font-weight: 900;
+        color: #f5f5f5; letter-spacing: -1px;
+        text-align: center;
+      }
+
+      /* RANK */
+      .scene-rank .scene-content {
+        justify-content: flex-start; padding: 150px 60px 60px; gap: 0;
+      }
+      .rank-header {
+        display: flex; align-items: flex-end; gap: 24px;
+        margin-bottom: 30px;
+        justify-content: center;
+      }
+      .rank-num {
+        font-family: 'Anton', 'Inter', sans-serif;
+        font-size: 360px; line-height: 0.78;
+        letter-spacing: -8px;
+        font-variant-numeric: tabular-nums;
+        color: #e8ff3a;
+      }
+      .rank-label {
+        font-size: 56px; font-weight: 900; color: #888;
+        letter-spacing: 4px; text-transform: uppercase;
+        padding-bottom: 40px;
+      }
+      .product-image-wrap {
+        width: 720px; height: 720px;
+        margin: 0 auto 24px;
+        border-radius: 18px; overflow: hidden;
+        background: #14140a;
+      }
+      .product-image-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .product-info {
+        display: flex; flex-direction: column;
+        align-items: center; text-align: center;
+        gap: 14px;
+      }
+      .product-name {
+        font-size: 60px; font-weight: 800; color: #f5f5f5; line-height: 1.1;
+        max-width: 920px;
+      }
+      .product-price {
+        font-size: 108px; font-weight: 900; color: #e8ff3a;
+        font-variant-numeric: tabular-nums; line-height: 1;
+      }
+      .product-rating {
+        font-size: 36px; font-weight: 700; color: #22e0ff;
+        font-variant-numeric: tabular-nums;
+      }
+      .product-tagline {
+        font-size: 46px; font-weight: 800; color: #ff3464;
+        margin-top: 14px; line-height: 1.2;
+        max-width: 920px;
+      }
+
+      /* CTA */
+      .scene-cta .scene-content { justify-content: center; align-items: center; gap: 30px; }
+      .cta-arrow {
+        font-family: 'Anton', 'Inter', sans-serif;
+        font-size: 360px; color: #e8ff3a;
+        line-height: 0.8;
+      }
+      .cta-title {
+        font-family: 'Anton', 'Inter', sans-serif;
+        font-size: 110px; line-height: 0.98;
+        color: #f5f5f5; text-align: center;
+        letter-spacing: -2px;
+      }
+      .cta-sub {
+        font-size: 52px; font-weight: 900;
+        color: #e8ff3a; text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="30" data-width="1080" data-height="1920">
+
+      <!-- Background (always visible) -->
+      <div id="bg" class="clip bg" data-start="0" data-duration="30" data-track-index="0">
+        <div class="grid-overlay"></div>
+      </div>
+
+      <!-- PR badge (legally required, always visible) -->
+      <div id="pr-badge" class="clip pr-badge" data-start="0" data-duration="30" data-track-index="5">#PR / Amazonアソシエイト</div>
+
+      <!-- Scene 1: Hook (0-3.3s) -->
+      <div id="scene-hook" class="clip scene scene-hook" data-start="0" data-duration="3.3" data-track-index="1">
+        <div class="scene-content">
+          <div class="hook-bar" id="hook-bar">
+            <div class="hook-bar-icon"></div>
+            <div class="hook-bar-text">自己啓発</div>
+          </div>
+          <div class="hook-marker" id="hook-marker">▼ AMAZON BEST</div>
+          <div class="hook-title" id="hook-title">TOP<br/>5</div>
+          <div class="hook-sub" id="hook-sub">爆売れ。買って人生変えろ</div>
+        </div>
+      </div>
+
+      <!-- Scene 2: Rank5 (3-7.3s) -->
+      <div id="scene-rank5" class="clip scene scene-rank" data-start="3" data-duration="4.3" data-track-index="2">
+        <div class="scene-content">
+          <div class="rank-header">
+            <div class="rank-num" id="r5-num">05</div>
+            <div class="rank-label" id="r5-label">位</div>
+          </div>
+          <div class="product-image-wrap" id="r5-img">
+            <img src="assets/products/product-5.svg" alt="大学入試問題集 関正生の英文法ポラリス[1 標準レベル]" />
+          </div>
+          <div class="product-info">
+            <div class="product-name" id="r5-name">大学入試問題集 関正生の英文法ポラリス[1 標準レベル]</div>
+            <div class="product-price" id="r5-price">¥4,700</div>
+            <div class="product-rating" id="r5-rating">★4.4 / レビュー1,265件</div>
+            <div class="product-tagline" id="r5-tag">気づいた人だけ得してる</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 3: Rank4 (7-11.3s) -->
+      <div id="scene-rank4" class="clip scene scene-rank" data-start="7" data-duration="4.3" data-track-index="1">
+        <div class="scene-content">
+          <div class="rank-header">
+            <div class="rank-num" id="r4-num">04</div>
+            <div class="rank-label" id="r4-label">位</div>
+          </div>
+          <div class="product-image-wrap" id="r4-img">
+            <img src="assets/products/product-4.svg" alt="中学英語をもう一度ひとつひとつわかりやすく。改訂版" />
+          </div>
+          <div class="product-info">
+            <div class="product-name" id="r4-name">中学英語をもう一度ひとつひとつわかりやすく。改訂版</div>
+            <div class="product-price" id="r4-price">¥3,900</div>
+            <div class="product-rating" id="r4-rating">★4.4 / レビュー1,351件</div>
+            <div class="product-tagline" id="r4-tag">TikTokで9割が買ってる</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 4: Rank3 (11-15.3s) -->
+      <div id="scene-rank3" class="clip scene scene-rank" data-start="11" data-duration="4.3" data-track-index="2">
+        <div class="scene-content">
+          <div class="rank-header">
+            <div class="rank-num" id="r3-num">03</div>
+            <div class="rank-label" id="r3-label">位</div>
+          </div>
+          <div class="product-image-wrap" id="r3-img">
+            <img src="assets/products/product-3.svg" alt="大岩のいちばんはじめの英文法【超基礎文法編】 (東進ブックス 名人の授業シリーズ" />
+          </div>
+          <div class="product-info">
+            <div class="product-name" id="r3-name">大岩のいちばんはじめの英文法【超基礎文法編】 (東進ブックス 名人の授業シリーズ</div>
+            <div class="product-price" id="r3-price">¥3,100</div>
+            <div class="product-rating" id="r3-rating">★4.4 / レビュー2,511件</div>
+            <div class="product-tagline" id="r3-tag">もうすぐ値上げかも</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 5: Rank2 (15-19.3s) -->
+      <div id="scene-rank2" class="clip scene scene-rank" data-start="15" data-duration="4.3" data-track-index="1">
+        <div class="scene-content">
+          <div class="rank-header">
+            <div class="rank-num" id="r2-num">02</div>
+            <div class="rank-label" id="r2-label">位</div>
+          </div>
+          <div class="product-image-wrap" id="r2-img">
+            <img src="assets/products/product-2.svg" alt="英単語ターゲット1900 6訂版 (大学JUKEN新書)" />
+          </div>
+          <div class="product-info">
+            <div class="product-name" id="r2-name">英単語ターゲット1900 6訂版 (大学JUKEN新書)</div>
+            <div class="product-price" id="r2-price">¥2,300</div>
+            <div class="product-rating" id="r2-rating">★4.4 / レビュー2,843件</div>
+            <div class="product-tagline" id="r2-tag">99%は気づいてない神品</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 6: Rank1 (19-25.3s) -->
+      <div id="scene-rank1" class="clip scene scene-rank" data-start="19" data-duration="6.3" data-track-index="2">
+        <div class="scene-content">
+          <div class="rank-header">
+            <div class="rank-num" id="r1-num">01</div>
+            <div class="rank-label" id="r1-label">位</div>
+          </div>
+          <div class="product-image-wrap" id="r1-img">
+            <img src="assets/products/product-1.svg" alt="TOEIC L&amp;Rテスト 文法問題 でる1000問" />
+          </div>
+          <div class="product-info">
+            <div class="product-name" id="r1-name">TOEIC L&amp;Rテスト 文法問題 でる1000問</div>
+            <div class="product-price" id="r1-price">¥1,500</div>
+            <div class="product-rating" id="r1-rating">★4.5 / レビュー3,189件</div>
+            <div class="product-tagline" id="r1-tag">今買わないと一生後悔</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 7: CTA (25-30s) -->
+      <div id="scene-cta" class="clip scene scene-cta" data-start="25" data-duration="5" data-track-index="1">
+        <div class="scene-content">
+          <div class="cta-arrow" id="cta-arrow">↑</div>
+          <div class="cta-title" id="cta-title">プロフリンク<br/>に全部</div>
+          <div class="cta-sub" id="cta-sub">保存→プロフから飛べ</div>
+        </div>
+      </div>
+
+      <!-- Audio narration tracks -->
+      <audio id="aud-hook" class="clip" data-start="0.4"  data-duration="2.5" data-track-index="3" src="assets/audio/parts/01-hook.mp3"></audio>
+      <audio id="aud-r5"   class="clip" data-start="3.4"  data-duration="3.0" data-track-index="3" src="assets/audio/parts/02-rank5.mp3"></audio>
+      <audio id="aud-r4"   class="clip" data-start="7.4"  data-duration="3.0" data-track-index="3" src="assets/audio/parts/03-rank4.mp3"></audio>
+      <audio id="aud-r3"   class="clip" data-start="11.4" data-duration="2.5" data-track-index="3" src="assets/audio/parts/04-rank3.mp3"></audio>
+      <audio id="aud-r2"   class="clip" data-start="15.4" data-duration="2.5" data-track-index="3" src="assets/audio/parts/05-rank2.mp3"></audio>
+      <audio id="aud-r1"   class="clip" data-start="19.4" data-duration="2.5" data-track-index="3" src="assets/audio/parts/06-rank1.mp3"></audio>
+      <audio id="aud-cta"  class="clip" data-start="25.6" data-duration="2.5" data-track-index="3" src="assets/audio/parts/07-cta.mp3"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // SCENE 1: HOOK (0-3.3)
+      tl.from('#scene-hook',  { opacity: 0, duration: 0.25, ease: 'power2.out' }, 0);
+      tl.from('#hook-bar',    { y: -80, opacity: 0, duration: 0.6, ease: 'power3.out' }, 0.1);
+      tl.from('#hook-marker', { y: 30, opacity: 0, duration: 0.4, ease: 'power2.out' }, 0.5);
+      tl.from('#hook-title',  { scale: 1.4, opacity: 0, duration: 0.55, ease: 'back.out(2)' }, 0.7);
+      tl.from('#hook-sub',    { y: 50, opacity: 0, duration: 0.5, ease: 'expo.out' }, 1.15);
+
+      // Generic rank scene entrance (no exit — transition IS the exit)
+      function rankScene(t, prefix) {
+        tl.from(`#scene-rank${prefix}`, { opacity: 0, duration: 0.3, ease: 'power2.out' }, t);
+        tl.from(`#r${prefix}-num`,    { scale: 1.6, opacity: 0, duration: 0.55, ease: 'back.out(1.7)' }, t + 0.1);
+        tl.from(`#r${prefix}-label`,  { x: -40, opacity: 0, duration: 0.4, ease: 'expo.out' }, t + 0.3);
+        tl.from(`#r${prefix}-img`,    { y: 60, scale: 0.92, opacity: 0, duration: 0.5, ease: 'power3.out' }, t + 0.35);
+        tl.from(`#r${prefix}-name`,   { y: 30, opacity: 0, duration: 0.4, ease: 'power2.out' }, t + 0.6);
+        tl.from(`#r${prefix}-price`,  { scale: 0.7, opacity: 0, duration: 0.5, ease: 'back.out(1.8)' }, t + 0.75);
+        tl.from(`#r${prefix}-rating`, { y: 20, opacity: 0, duration: 0.35, ease: 'power2.out' }, t + 0.95);
+        tl.from(`#r${prefix}-tag`,    { x: -50, opacity: 0, duration: 0.45, ease: 'expo.out' }, t + 1.1);
+      }
+
+      rankScene(3,  '5');
+      rankScene(7,  '4');
+      rankScene(11, '3');
+      rankScene(15, '2');
+      rankScene(19, '1');
+
+      // SCENE 7: CTA (25-30) — last scene, fade out allowed
+      tl.from('#scene-cta',  { opacity: 0, duration: 0.3, ease: 'power2.out' }, 25);
+      tl.from('#cta-arrow',  { y: 80, opacity: 0, duration: 0.6, ease: 'back.out(2)' }, 25.15);
+      tl.from('#cta-title',  { y: 50, opacity: 0, duration: 0.5, ease: 'power3.out' }, 25.4);
+      tl.from('#cta-sub',    { y: 30, opacity: 0, duration: 0.4, ease: 'expo.out' }, 25.75);
+      tl.to('#scene-cta',    { opacity: 0, duration: 0.5, ease: 'power2.in' }, 29.3);
+
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>

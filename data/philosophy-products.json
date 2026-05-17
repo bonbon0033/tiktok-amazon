@@ -1,0 +1,71 @@
+{
+  "_doc": "Books for philosophy/cosmos/wisdom slide content. Swapped into philosophy-slide/index.html by scripts/swap-philosophy.mjs.",
+  "associatesTag": "your-id-22",
+  "currentBook": {
+    "asin": "B0PLACEHOLDER",
+    "title": "宇宙への秘密の鍵",
+    "author": "サイモン・シン",
+    "publisher": "新潮文庫",
+    "price": "¥968",
+    "tagline": "宇宙の歴史を物語で語る、科学ノンフィクションの傑作",
+    "themeSlideKey": "cosmos"
+  },
+  "candidates": [
+    {
+      "asin": "B0PLACEHOLDER",
+      "title": "宇宙への秘密の鍵",
+      "author": "サイモン・シン",
+      "themeSlideKey": "cosmos",
+      "tagline": "宇宙の歴史を物語で語る"
+    },
+    {
+      "asin": "B0PLACEHOLDER",
+      "title": "ホーキング、宇宙を語る",
+      "author": "スティーヴン・W・ホーキング",
+      "themeSlideKey": "cosmos",
+      "tagline": "ビッグバンからブラックホールまで"
+    },
+    {
+      "asin": "B0PLACEHOLDER",
+      "title": "ソフィーの世界",
+      "author": "ヨースタイン・ゴルデル",
+      "themeSlideKey": "philosophy",
+      "tagline": "西洋哲学全史を物語で読む"
+    },
+    {
+      "asin": "B0PLACEHOLDER",
+      "title": "嫌われる勇気",
+      "author": "岸見一郎",
+      "themeSlideKey": "self-help",
+      "tagline": "アドラー心理学の入門書"
+    },
+    {
+      "asin": "B0PLACEHOLDER",
+      "title": "サピエンス全史",
+      "author": "ユヴァル・ノア・ハラリ",
+      "themeSlideKey": "wisdom",
+      "tagline": "人類の歴史を1冊で俯瞰"
+    },
+    {
+      "asin": "B0PLACEHOLDER",
+      "title": "夜と霧",
+      "author": "ヴィクトール・E・フランクル",
+      "themeSlideKey": "philosophy",
+      "tagline": "極限状況で見出した生きる意味"
+    },
+    {
+      "asin": "B0PLACEHOLDER",
+      "title": "コスモス",
+      "author": "カール・セーガン",
+      "themeSlideKey": "cosmos",
+      "tagline": "宇宙への詩的なまなざし"
+    },
+    {
+      "asin": "B0PLACEHOLDER",
+      "title": "幸福論",
+      "author": "ベルトラン・ラッセル",
+      "themeSlideKey": "philosophy",
+      "tagline": "20世紀最高の哲学者が説く幸福"
+    }
+  ]
+}

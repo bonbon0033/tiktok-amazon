@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="ja" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800;900&family=Noto+Serif+JP:wght@500;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0; width: 1080px; height: 1920px;
+        overflow: hidden; background: #0a0a0a;
+        font-family: 'Inter', 'Noto Serif JP', 'Hiragino Sans', sans-serif;
+        color: #f5f5f5;
+      }
+
+      .pr-badge {
+        position: absolute; top: 50px; right: 40px;
+        background: rgba(255,52,100,0.92); color: #fff;
+        padding: 12px 26px; border-radius: 28px;
+        font-size: 28px; font-weight: 900;
+        letter-spacing: 2px; z-index: 1000;
+      }
+
+      .slide { position: absolute; inset: 0; width: 1080px; height: 1920px; overflow: hidden; }
+      .slide-bg {
+        position: absolute; inset: 0;
+        width: 100%; height: 100%;
+        object-fit: cover;
+      }
+      .slide-overlay {
+        position: absolute; inset: 0;
+        background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 35%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0.85) 100%);
+      }
+      .slide-content {
+        position: absolute; left: 60px; right: 60px;
+        display: flex; flex-direction: column;
+        gap: 18px;
+      }
+      .slide-content.bottom { bottom: 200px; }
+      .slide-content.center { top: 50%; transform: translateY(-50%); }
+      .slide-content.top    { top: 220px; }
+
+      .slide-pre {
+        font-size: 36px; font-weight: 900; letter-spacing: 8px;
+        color: #e8ff3a; text-transform: uppercase;
+      }
+      .slide-headline {
+        font-family: 'Noto Serif JP', 'Inter', serif;
+        font-size: 88px; font-weight: 700; line-height: 1.18;
+        color: #f5f5f5;
+        text-shadow: 0 4px 30px rgba(0,0,0,0.85);
+      }
+      .slide-headline strong {
+        color: #e8ff3a;
+        font-weight: 900;
+      }
+      .slide-sub {
+        font-size: 44px; font-weight: 800;
+        color: rgba(245,245,245,0.78);
+        line-height: 1.4;
+        text-shadow: 0 3px 18px rgba(0,0,0,0.85);
+      }
+      .slide-number {
+        position: absolute; top: 130px; left: 60px;
+        font-family: 'Anton', sans-serif;
+        font-size: 90px; line-height: 1;
+        color: rgba(255,255,255,0.30);
+        font-variant-numeric: tabular-nums;
+      }
+      .slide-number small {
+        font-size: 32px; vertical-align: top;
+        margin-left: 8px; letter-spacing: 4px;
+      }
+
+      /* CTA-specific */
+      .slide-cta-tag {
+        display: inline-block;
+        background: #ff3464; color: #fff;
+        padding: 14px 28px; border-radius: 32px;
+        font-size: 34px; font-weight: 900;
+        letter-spacing: 4px;
+        align-self: flex-start;
+      }
+      .slide-cta-arrow {
+        font-family: 'Anton', sans-serif;
+        font-size: 180px; color: #e8ff3a;
+        line-height: 0.8;
+        text-shadow: 0 0 30px rgba(232,255,58,0.9);
+      }
+      .product-card-mini {
+        display: flex; gap: 22px;
+        background: rgba(245,245,245,0.96);
+        color: #0a0a0a;
+        border-radius: 18px;
+        padding: 22px; margin-top: 8px;
+        align-items: center;
+      }
+      .product-card-mini .pc-img {
+        width: 140px; height: 140px;
+        border-radius: 12px; flex-shrink: 0;
+        background: #e8ff3a;
+        display: grid; place-items: center;
+      }
+      .product-card-mini .pc-img span {
+        font-size: 60px;
+      }
+      .product-card-mini .pc-info {
+        display: flex; flex-direction: column;
+        gap: 6px;
+      }
+      .product-card-mini .pc-name {
+        font-size: 34px; font-weight: 900;
+        color: #0a0a0a; line-height: 1.15;
+      }
+      .product-card-mini .pc-price {
+        font-family: 'Anton', sans-serif;
+        font-size: 50px; font-weight: 900;
+        color: #ff3464; line-height: 1;
+        font-variant-numeric: tabular-nums;
+      }
+      .product-card-mini .pc-star {
+        font-size: 26px; color: #22e0ff; font-weight: 800;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="slideshow" data-start="0" data-duration="25" data-width="1080" data-height="1920">
+
+      <div id="pr-badge" class="clip pr-badge" data-start="0" data-duration="25" data-track-index="5">#PR / Amazonアソシエイト</div>
+
+      <!-- ═══ Slide 1: Hook — Before / 暗い部屋 (0-5s) ═══ -->
+      <div id="slide1" class="clip slide" data-start="0" data-duration="5.3" data-track-index="1">
+        <img class="slide-bg" id="slide1-bg" src="../assets/slides/photo-1.jpg" alt="Before" />
+        <div class="slide-overlay"></div>
+        <div class="slide-number" id="slide1-num">01<small>/04</small></div>
+        <div class="slide-content bottom">
+          <div class="slide-pre" id="slide1-pre">▼ 私のリアルな話</div>
+          <div class="slide-headline" id="slide1-head">私が月<strong>¥0 → ¥5万</strong><br/>稼げた本当の理由…</div>
+          <div class="slide-sub" id="slide1-sub">3分で全部話す</div>
+        </div>
+      </div>
+
+      <!-- ═══ Slide 2: Problem — 散らかった机 (5-12s) ═══ -->
+      <div id="slide2" class="clip slide" data-start="5" data-duration="7.3" data-track-index="2">
+        <img class="slide-bg" id="slide2-bg" src="../assets/slides/photo-2.jpg" alt="Problem" />
+        <div class="slide-overlay"></div>
+        <div class="slide-number" id="slide2-num">02<small>/04</small></div>
+        <div class="slide-content bottom">
+          <div class="slide-pre" id="slide2-pre">▼ そして気づいた</div>
+          <div class="slide-headline" id="slide2-head">最初は<strong>全然続かなくて</strong>…<br/>もう諦めかけてた</div>
+          <div class="slide-sub" id="slide2-sub">3年やって稼げず、フォロワーも増えず</div>
+        </div>
+      </div>
+
+      <!-- ═══ Slide 3: Process — 書く手元 (12-19s) ═══ -->
+      <div id="slide3" class="clip slide" data-start="12" data-duration="7.3" data-track-index="1">
+        <img class="slide-bg" id="slide3-bg" src="../assets/slides/photo-3.jpg" alt="Process" />
+        <div class="slide-overlay"></div>
+        <div class="slide-number" id="slide3-num">03<small>/04</small></div>
+        <div class="slide-content bottom">
+          <div class="slide-pre" id="slide3-pre">▼ 始めたのは1つだけ</div>
+          <div class="slide-headline" id="slide3-head">これに毎日<br/><strong>3行だけ</strong>書いた</div>
+          <div class="slide-sub" id="slide3-sub">気づいたら習慣になってた</div>
+        </div>
+      </div>
+
+      <!-- ═══ Slide 4: Solution + CTA — 朝日・商品 (19-25s) ═══ -->
+      <div id="slide4" class="clip slide" data-start="19" data-duration="6" data-track-index="2">
+        <img class="slide-bg" id="slide4-bg" src="../assets/slides/photo-4.jpg" alt="Solution" />
+        <div class="slide-overlay"></div>
+        <div class="slide-number" id="slide4-num">04<small>/04</small></div>
+        <div class="slide-content bottom">
+          <div class="slide-cta-tag" id="slide4-tag">▼ これ使った</div>
+          <div class="slide-headline" id="slide4-head"><strong>3ヶ月で月5万</strong><br/>突破した</div>
+          <div class="product-card-mini" id="slide4-product">
+            <div class="pc-img"><span>📔</span></div>
+            <div class="pc-info">
+              <div class="pc-name" id="slide4-pc-name">TOEIC L&amp;Rテスト 文法問題 でる1000問</div>
+              <div class="pc-price" id="slide4-pc-price">¥1,500</div>
+              <div class="pc-star" id="slide4-pc-star">★4.5 / 3,189件+</div>
+            </div>
+          </div>
+          <div class="slide-sub" id="slide4-sub">▼ プロフリンクから即チェック</div>
+        </div>
+      </div>
+
+      <!-- ═══ Audio narration ═══ -->
+      <audio id="aud-1" class="clip" data-start="0.3"  data-duration="4.0" data-track-index="3" src="../assets/audio/slideshow/01-hook.mp3"></audio>
+      <audio id="aud-2" class="clip" data-start="5.3"  data-duration="5.5" data-track-index="3" src="../assets/audio/slideshow/02-problem.mp3"></audio>
+      <audio id="aud-3" class="clip" data-start="12.3" data-duration="5.5" data-track-index="3" src="../assets/audio/slideshow/03-process.mp3"></audio>
+      <audio id="aud-4" class="clip" data-start="19.3" data-duration="5.0" data-track-index="3" src="../assets/audio/slideshow/04-cta.mp3"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Ken-Burns helper: bg slowly zooms/pans through scene
+      function kenBurns(t, sel, dir = 'in') {
+        if (dir === 'in') {
+          tl.fromTo(sel, { scale: 1.0, x: 0 }, { scale: 1.12, x: -30, duration: 6, ease: 'sine.out' }, t);
+        } else {
+          tl.fromTo(sel, { scale: 1.12, x: -30 }, { scale: 1.0, x: 0, duration: 6, ease: 'sine.in' }, t);
+        }
+      }
+
+      // ─── Slide 1 (0-5.3s) Hook ───
+      tl.from('#slide1',           { opacity: 0, duration: 0.4, ease: 'power2.out' }, 0);
+      kenBurns(0, '#slide1-bg', 'in');
+      tl.from('#slide1-num',       { y: -30, opacity: 0, duration: 0.5, ease: 'power2.out' }, 0.15);
+      tl.from('#slide1-pre',       { x: -40, opacity: 0, duration: 0.5, ease: 'expo.out' }, 0.4);
+      tl.from('#slide1-head',      { y: 40, opacity: 0, duration: 0.7, ease: 'power3.out' }, 0.7);
+      tl.from('#slide1-sub',       { y: 25, opacity: 0, duration: 0.5, ease: 'power2.out' }, 1.2);
+
+      // ─── Slide 2 (5-12.3s) Problem ───
+      tl.from('#slide2',           { opacity: 0, duration: 0.4, ease: 'power2.out' }, 5);
+      kenBurns(5, '#slide2-bg', 'out');
+      tl.from('#slide2-num',       { y: -30, opacity: 0, duration: 0.5, ease: 'power2.out' }, 5.15);
+      tl.from('#slide2-pre',       { x: -40, opacity: 0, duration: 0.5, ease: 'expo.out' }, 5.4);
+      tl.from('#slide2-head',      { y: 40, opacity: 0, duration: 0.7, ease: 'power3.out' }, 5.7);
+      tl.from('#slide2-sub',       { y: 25, opacity: 0, duration: 0.5, ease: 'power2.out' }, 6.3);
+
+      // ─── Slide 3 (12-19.3s) Process ───
+      tl.from('#slide3',           { opacity: 0, duration: 0.4, ease: 'power2.out' }, 12);
+      kenBurns(12, '#slide3-bg', 'in');
+      tl.from('#slide3-num',       { y: -30, opacity: 0, duration: 0.5, ease: 'power2.out' }, 12.15);
+      tl.from('#slide3-pre',       { x: -40, opacity: 0, duration: 0.5, ease: 'expo.out' }, 12.4);
+      tl.from('#slide3-head',      { y: 40, opacity: 0, duration: 0.7, ease: 'power3.out' }, 12.7);
+      tl.from('#slide3-sub',       { y: 25, opacity: 0, duration: 0.5, ease: 'power2.out' }, 13.3);
+
+      // ─── Slide 4 (19-25s) Solution + CTA ───
+      tl.from('#slide4',             { opacity: 0, duration: 0.4, ease: 'power2.out' }, 19);
+      kenBurns(19, '#slide4-bg', 'in');
+      tl.from('#slide4-num',         { y: -30, opacity: 0, duration: 0.5, ease: 'power2.out' }, 19.15);
+      tl.from('#slide4-tag',         { scale: 0, opacity: 0, duration: 0.45, ease: 'back.out(2)' }, 19.3);
+      tl.from('#slide4-head',        { y: 40, opacity: 0, duration: 0.6, ease: 'power3.out' }, 19.6);
+      tl.from('#slide4-product',     { y: 50, opacity: 0, duration: 0.6, ease: 'back.out(1.5)' }, 20.1);
+      tl.from('#slide4-sub',         { y: 25, opacity: 0, duration: 0.5, ease: 'expo.out' }, 20.8);
+
+      // CTA pulse
+      tl.to('#slide4-tag', { scale: 1.06, duration: 0.3, ease: 'sine.inOut', yoyo: true, repeat: 6 }, 21.5);
+      tl.to('#slide4-product', { scale: 1.03, duration: 0.4, ease: 'sine.inOut', yoyo: true, repeat: 4 }, 21.7);
+
+      // Final fade (last slide allowed)
+      tl.to('#slide4', { opacity: 0, duration: 0.5, ease: 'power2.in' }, 24.5);
+
+      window.__timelines['slideshow'] = tl;
+    </script>
+  </body>
+</html>

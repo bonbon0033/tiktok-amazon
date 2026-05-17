@@ -1,0 +1,56 @@
+name: Deploy Linktree to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/products.json'
+      - 'linktree/template.html'
+      - 'linktree/photos/**'
+      - 'scripts/build-linktree.mjs'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build linktree + photos
+        env:
+          HANDLE: ${{ vars.HANDLE || '@your_handle' }}
+        run: |
+          mkdir -p public/photos
+          node scripts/build-linktree.mjs
+          cp linktree/output.html public/index.html
+          # Deploy photos for TikTok Photo Post API (must be publicly accessible)
+          cp linktree/photos/*.jpg public/photos/ 2>/dev/null || true
+          echo "Built. Output:"
+          ls -la public/
+          ls -la public/photos/ || echo "(no photos yet)"
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

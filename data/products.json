@@ -1,0 +1,61 @@
+{
+  "category": "self-improvement",
+  "associatesTag": "REPLACE-WITH-YOUR-TAG-22",
+  "products": [
+    {
+      "rank": 1,
+      "name": "TOEIC L&Rテスト 文法問題 でる1000問",
+      "price": "¥1,500",
+      "rating": 4.5,
+      "reviews": "3,189",
+      "tagline": "今買わないと一生後悔",
+      "asin": "4866390832",
+      "image": "assets/products/product-1.svg",
+      "accent": "#e8ff3a"
+    },
+    {
+      "rank": 2,
+      "name": "英単語ターゲット1900 6訂版 (大学JUKEN新書)",
+      "price": "¥2,300",
+      "rating": 4.4,
+      "reviews": "2,843",
+      "tagline": "99%は気づいてない神品",
+      "asin": "4010346469",
+      "image": "assets/products/product-2.svg",
+      "accent": "#22e0ff"
+    },
+    {
+      "rank": 3,
+      "name": "大岩のいちばんはじめの英文法【超基礎文法編】 (東進ブックス 名人の授業シリーズ",
+      "price": "¥3,100",
+      "rating": 4.4,
+      "reviews": "2,511",
+      "tagline": "もうすぐ値上げかも",
+      "asin": "4890855890",
+      "image": "assets/products/product-3.svg",
+      "accent": "#e8ff3a"
+    },
+    {
+      "rank": 4,
+      "name": "中学英語をもう一度ひとつひとつわかりやすく。改訂版",
+      "price": "¥3,900",
+      "rating": 4.4,
+      "reviews": "1,351",
+      "tagline": "TikTokで9割が買ってる",
+      "asin": "4053054826",
+      "image": "assets/products/product-4.svg",
+      "accent": "#ff3464"
+    },
+    {
+      "rank": 5,
+      "name": "大学入試問題集 関正生の英文法ポラリス[1 標準レベル]",
+      "price": "¥4,700",
+      "rating": 4.4,
+      "reviews": "1,265",
+      "tagline": "気づいた人だけ得してる",
+      "asin": "4046019263",
+      "image": "assets/products/product-5.svg",
+      "accent": "#22e0ff"
+    }
+  ]
+}

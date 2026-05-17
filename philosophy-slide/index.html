@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="ja" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;900&family=Shippori+Mincho:wght@700;800&family=Inter:wght@500;700;900&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0; width: 1080px; height: 1920px;
+        overflow: hidden; background: #02020a;
+        font-family: 'Shippori Mincho', 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+        color: #f0eee6;
+      }
+
+      .cosmos {
+        position: absolute; inset: 0;
+        width: 1080px; height: 1920px;
+        background:
+          radial-gradient(ellipse at 30% 25%, rgba(94, 84, 200, 0.25), transparent 55%),
+          radial-gradient(ellipse at 70% 75%, rgba(38, 28, 120, 0.4), transparent 50%),
+          radial-gradient(circle at 50% 50%, rgba(0,0,0,0.4), transparent 70%),
+          #02020a;
+      }
+
+      .stars {
+        position: absolute; inset: 0;
+        width: 1080px; height: 1920px;
+        background-image:
+          radial-gradient(1px 1px at 80px 200px, #fff, transparent),
+          radial-gradient(1px 1px at 240px 480px, #fff, transparent),
+          radial-gradient(2px 2px at 450px 320px, #fff, transparent),
+          radial-gradient(1px 1px at 720px 180px, #fff, transparent),
+          radial-gradient(1px 1px at 900px 560px, #fff, transparent),
+          radial-gradient(2px 2px at 160px 880px, #fff, transparent),
+          radial-gradient(1px 1px at 380px 1040px, #fff, transparent),
+          radial-gradient(1px 1px at 620px 1280px, #fff, transparent),
+          radial-gradient(2px 2px at 880px 1100px, #fff, transparent),
+          radial-gradient(1px 1px at 220px 1500px, #fff, transparent),
+          radial-gradient(1px 1px at 540px 1680px, #fff, transparent),
+          radial-gradient(1px 1px at 820px 1820px, #fff, transparent),
+          radial-gradient(2px 2px at 950px 920px, #fff, transparent),
+          radial-gradient(1px 1px at 60px 1340px, #fff, transparent),
+          radial-gradient(1px 1px at 700px 700px, #fff, transparent);
+        opacity: 0.9;
+      }
+
+      .pr-badge {
+        position: absolute; top: 50px; right: 40px;
+        background: rgba(200, 180, 110, 0.92); color: #1a1604;
+        padding: 12px 26px; border-radius: 28px;
+        font-size: 30px; font-weight: 900;
+        letter-spacing: 2px; z-index: 1000;
+        font-family: 'Inter', sans-serif;
+      }
+
+      .scene { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+      .scene-content {
+        width: 100%; height: 100%;
+        padding: 200px 80px;
+        display: flex; flex-direction: column;
+        justify-content: center; align-items: center;
+        box-sizing: border-box; gap: 40px;
+        text-align: center;
+      }
+
+      .slide-no {
+        position: absolute; top: 130px; left: 60px;
+        font-family: 'Inter', sans-serif;
+        font-size: 28px; letter-spacing: 8px;
+        color: rgba(200, 180, 110, 0.7);
+        font-weight: 700;
+      }
+
+      .accent-rule {
+        width: 80px; height: 2px;
+        background: rgba(200, 180, 110, 0.7);
+        margin: 0 auto;
+      }
+
+      .body-text {
+        font-size: 86px;
+        line-height: 1.55;
+        font-weight: 800;
+        color: #f0eee6;
+        letter-spacing: 0.02em;
+        text-shadow: 0 2px 30px rgba(0,0,0,0.7);
+        max-width: 920px;
+      }
+      .body-text .accent { color: #d8c87a; }
+      .body-text .big { font-size: 110px; display: block; margin: 16px 0; }
+      .body-text .small { font-size: 56px; color: #aaa; display: block; margin-top: 24px; }
+
+      .quote-mark {
+        font-family: 'Noto Serif JP', serif;
+        font-size: 280px;
+        color: rgba(216, 200, 122, 0.25);
+        line-height: 0.5;
+        margin: -20px 0;
+      }
+
+      .author {
+        font-family: 'Inter', sans-serif;
+        font-size: 38px; color: #d8c87a;
+        letter-spacing: 0.1em;
+        margin-top: 16px;
+      }
+
+      .cta-tap {
+        display: inline-flex; align-items: center; gap: 18px;
+        padding: 26px 44px;
+        background: linear-gradient(135deg, #d8c87a 0%, #a89348 100%);
+        color: #1a1604;
+        font-family: 'Inter', sans-serif;
+        font-size: 48px; font-weight: 900;
+        border-radius: 60px;
+        box-shadow: 0 0 60px rgba(216, 200, 122, 0.5);
+        letter-spacing: 0.05em;
+      }
+
+      .arrow {
+        font-size: 60px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="philosophy-slide" data-start="0" data-duration="54" data-width="1080" data-height="1920">
+
+    <div id="cosmos-bg" class="clip cosmos" data-start="0" data-duration="54" data-track-index="0"></div>
+    <div id="stars-bg" class="clip stars" data-start="0" data-duration="54" data-track-index="1"></div>
+
+    <div id="pr-badge" class="clip pr-badge" data-start="0" data-duration="54" data-track-index="2">PR</div>
+
+    <!-- Slide 1 / hook -->
+    <div id="slide-01-hook" class="clip scene" data-start="0" data-duration="5.2" data-track-index="3">
+      <div class="slide-no">01 / 10</div>
+      <div class="scene-content">
+        <div class="body-text">
+          <span class="big">もし宇宙の果てを<br><span class="accent">見たら</span>、</span>
+          あなたは何を思うだろうか。
+        </div>
+        <div class="accent-rule"></div>
+      </div>
+    </div>
+
+    <!-- Slide 2 / setup fact -->
+    <div id="slide-02-fact" class="clip scene" data-start="5.2" data-duration="5" data-track-index="4">
+      <div class="slide-no">02 / 10</div>
+      <div class="scene-content">
+        <div class="body-text">
+          光は1秒に<br>
+          <span class="big accent">地球を 7周半</span>
+          進む。
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3 / scale shock -->
+    <div id="slide-03-scale" class="clip scene" data-start="10.2" data-duration="5" data-track-index="5">
+      <div class="slide-no">03 / 10</div>
+      <div class="scene-content">
+        <div class="body-text">
+          それでも宇宙の端まで<br>
+          <span class="big accent">465 億光年</span>
+          <span class="small">人類はその中の塵にすぎない。</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4 / question -->
+    <div id="slide-04-question" class="clip scene" data-start="15.2" data-duration="5" data-track-index="6">
+      <div class="slide-no">04 / 10</div>
+      <div class="scene-content">
+        <div class="body-text">
+          ならば、<br>
+          <span class="accent">なぜ我々は</span><br>
+          <span class="big">星を 見上げる</span>
+          のだろうか。
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5 / pivot -->
+    <div id="slide-05-pivot" class="clip scene" data-start="20.2" data-duration="5" data-track-index="7">
+      <div class="slide-no">05 / 10</div>
+      <div class="scene-content">
+        <div class="body-text">
+          答えは、<br>
+          <span class="big accent">我々が宇宙の<br>一部だから</span>
+        </div>
+        <div class="accent-rule"></div>
+      </div>
+    </div>
+
+    <!-- Slide 6 / philosophical reveal -->
+    <div id="slide-06-quote" class="clip scene" data-start="25.2" data-duration="6" data-track-index="8">
+      <div class="slide-no">06 / 10</div>
+      <div class="scene-content">
+        <div class="quote-mark">"</div>
+        <div class="body-text">
+          人間は<span class="accent">考える葦</span>である。
+          <span class="small">— だが、考えるからこそ宇宙より偉大だ。</span>
+        </div>
+        <div class="author">— ブレーズ・パスカル</div>
+      </div>
+    </div>
+
+    <!-- Slide 7 / apply -->
+    <div id="slide-07-apply" class="clip scene" data-start="31.2" data-duration="5" data-track-index="9">
+      <div class="slide-no">07 / 10</div>
+      <div class="scene-content">
+        <div class="body-text">
+          明日も<br>
+          日常に追われる<br>
+          <span class="accent">あなたへ</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 8 / payoff -->
+    <div id="slide-08-payoff" class="clip scene" data-start="36.2" data-duration="5" data-track-index="10">
+      <div class="slide-no">08 / 10</div>
+      <div class="scene-content">
+        <div class="body-text">
+          見上げた星は、<br>
+          <span class="big accent">465億年前</span>
+          の光だ。
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 9 / book recommendation -->
+    <div id="slide-09-book" class="clip scene" data-start="41.2" data-duration="6" data-track-index="11">
+      <div class="slide-no">09 / 10</div>
+      <div class="scene-content">
+        <div class="body-text">
+          この感覚を<br>
+          知りたい人へ。
+          <span class="small" id="book-title">『宇宙への秘密の鍵』<br>サイモン・シン 著</span>
+        </div>
+        <div class="accent-rule"></div>
+      </div>
+    </div>
+
+    <!-- Slide 10 / CTA -->
+    <div id="slide-10-cta" class="clip scene" data-start="47.2" data-duration="6.5" data-track-index="12">
+      <div class="slide-no">10 / 10</div>
+      <div class="scene-content">
+        <div class="body-text">
+          <span class="accent">プロフのリンク</span>から
+        </div>
+        <div class="cta-tap">
+          <span class="arrow">▶</span>
+          <span>続きを読む</span>
+        </div>
+        <div class="body-text">
+          <span class="small">あなたの宇宙が広がる本。</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Narration audio (10 slides, ~54s total). -->
+    <audio id="narration" class="clip" data-start="0" data-duration="54" data-track-index="13"
+           src="assets/audio/parts/philosophy-narration.mp3"></audio>
+
+    </div><!-- /#root -->
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Slow drift for stars (background ambience)
+      tl.to(".stars", { y: -60, duration: 54, ease: "none" }, 0);
+
+      // Per-slide entrance: fade body-text from 30 below, accent-rule expand
+      const slides = document.querySelectorAll('.scene.clip');
+      slides.forEach((s) => {
+        const start = parseFloat(s.dataset.start);
+        const body = s.querySelector('.body-text');
+        const rule = s.querySelector('.accent-rule');
+        const slideNo = s.querySelector('.slide-no');
+        if (body) tl.from(body, { y: 50, opacity: 0, duration: 0.7, ease: "power3.out" }, start);
+        if (rule) tl.from(rule, { scaleX: 0, duration: 0.6, ease: "power2.out" }, start + 0.2);
+        if (slideNo) tl.from(slideNo, { opacity: 0, duration: 0.4 }, start);
+      });
+
+      // CTA pulse on slide 10
+      tl.to(".cta-tap", {
+        scale: 1.05, duration: 0.6, repeat: 5, yoyo: true, ease: "power1.inOut"
+      }, 47.4);
+
+      window.__timelines["philosophy-slide"] = tl;
+    </script>
+  </body>
+</html>

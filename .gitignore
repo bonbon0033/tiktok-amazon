@@ -1,0 +1,31 @@
+# Sensitive — never commit
+.env
+.env.local
+.tiktok-auth.json
+
+# Build outputs
+output/
+research/data/
+
+# Note: linktree/photos/ MUST be committed so GitHub Pages serves them
+# (TikTok Photo Post API fetches images by public URL)
+
+# Node
+node_modules/
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Playwright profile (contains TikTok cookies — never commit)
+.playwright-tiktok-profile/
+
+# Render artifacts
+render.log
+*.log

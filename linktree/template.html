@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{{HANDLE}} — 自己啓発 Amazon 厳選まとめ</title>
+  <meta name="description" content="TikTokで紹介したAmazon自己啓発グッズ。動画から流入してきた人向けのまとめページ" />
+  <style>
+    *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --canvas: #0a0a0a;
+      --surface: #14140a;
+      --surface-2: #1a1a1a;
+      --lime: #e8ff3a;
+      --cyan: #22e0ff;
+      --red: #ff3464;
+      --text: #f5f5f5;
+      --muted: #888;
+    }
+    html, body { background: var(--canvas); color: var(--text); font-family: 'Inter', -apple-system, system-ui, sans-serif; }
+    body { min-height: 100vh; padding: 32px 16px 80px; display: flex; justify-content: center; }
+    .container { width: 100%; max-width: 480px; }
+    header { text-align: center; margin-bottom: 32px; }
+    .avatar {
+      width: 96px; height: 96px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--lime), var(--cyan));
+      margin: 0 auto 16px; display: grid; place-items: center;
+      font-weight: 900; font-size: 36px; color: var(--canvas);
+    }
+    .handle { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+    .bio { font-size: 14px; color: var(--muted); line-height: 1.5; }
+    .section-title {
+      font-size: 12px; font-weight: 700; letter-spacing: 2px;
+      color: var(--muted); text-transform: uppercase;
+      margin: 24px 0 12px; padding-left: 4px;
+    }
+    .product {
+      display: flex; gap: 14px; align-items: center;
+      background: var(--surface-2); border: 1px solid #2a2a2a;
+      border-radius: 14px; padding: 14px; margin-bottom: 12px;
+      text-decoration: none; color: var(--text);
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .product:hover, .product:active { transform: translateY(-2px); border-color: var(--lime); }
+    .product .rank {
+      font-family: 'Anton', 'Inter', sans-serif;
+      font-size: 48px; font-weight: 900; line-height: 1;
+      color: var(--lime); min-width: 56px; text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+    .product .info { flex: 1; min-width: 0; }
+    .product .name { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+    .product .meta { font-size: 12px; color: var(--muted); display: flex; gap: 8px; align-items: center; }
+    .product .price { color: var(--lime); font-weight: 700; font-variant-numeric: tabular-nums; }
+    .product .star { color: var(--cyan); }
+    .product .arrow { color: var(--muted); font-size: 20px; }
+    .cta-block {
+      background: linear-gradient(135deg, var(--surface-2), var(--surface));
+      border: 1px solid var(--lime); border-radius: 14px;
+      padding: 18px; margin-top: 24px; text-align: center;
+    }
+    .cta-block .label { font-size: 11px; color: var(--lime); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+    .cta-block .text { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    footer { text-align: center; margin-top: 40px; font-size: 11px; color: #555; line-height: 1.7; }
+    footer a { color: #777; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="avatar">A</div>
+      <div class="handle">{{HANDLE}}</div>
+      <div class="bio">自己啓発で人生変えた。<br>TikTokで紹介したAmazon厳選まとめ↓</div>
+    </header>
+
+    <div class="section-title">▶ TikTok TOP 5</div>
+    <!-- PRODUCTS_BEGIN -->
+    {{PRODUCTS}}
+    <!-- PRODUCTS_END -->
+
+    <div class="cta-block">
+      <div class="label">▼ あとで読む用</div>
+      <div class="text">気になった商品はブラウザブックマーク or Amazonほしい物リストに保存。動画と一緒に見返せる。</div>
+    </div>
+
+    <footer>
+      当ページはAmazon.co.jpアソシエイト・プログラムの参加者として、適格販売により収入を得ています。<br>
+      価格・在庫は変動します。最新情報はリンク先のAmazonページでご確認ください。
+    </footer>
+  </div>
+</body>
+</html>

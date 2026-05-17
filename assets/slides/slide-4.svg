@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <defs>
+    <linearGradient id="g4dawn" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#1a1f3d"/>
+      <stop offset="22%" stop-color="#553c5a"/>
+      <stop offset="48%" stop-color="#e8a06c"/>
+      <stop offset="72%" stop-color="#f5d68b"/>
+      <stop offset="100%" stop-color="#f8e8c0"/>
+    </linearGradient>
+    <radialGradient id="g4sun" cx="0.5" cy="0.42" r="0.32">
+      <stop offset="0%"  stop-color="rgba(255,240,180,1)"/>
+      <stop offset="40%" stop-color="rgba(255,220,140,0.6)"/>
+      <stop offset="100%" stop-color="rgba(255,200,100,0)"/>
+    </radialGradient>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#g4dawn)"/>
+  <rect width="1080" height="1920" fill="url(#g4sun)"/>
+
+  <!-- Sun -->
+  <circle cx="540" cy="800" r="180" fill="rgba(255,250,200,0.95)"/>
+  <circle cx="540" cy="800" r="240" fill="rgba(255,240,180,0.25)"/>
+
+  <!-- Horizon line -->
+  <line x1="0" y1="820" x2="1080" y2="820" stroke="rgba(0,0,0,0.18)" stroke-width="2"/>
+
+  <!-- Foreground silhouette -->
+  <path d="M 0 1400 Q 200 1380 400 1420 Q 600 1460 800 1420 Q 1000 1400 1080 1430 L 1080 1920 L 0 1920 Z" fill="rgba(0,0,0,0.25)"/>
+
+  <!-- Notebook (product) -->
+  <g transform="translate(280 1100)">
+    <rect width="520" height="660" rx="14" fill="#22e0ff" stroke="#0a0a0a" stroke-width="8"/>
+    <rect x="32" y="50" width="456" height="560" fill="#fafafa"/>
+    <text x="260" y="270" font-size="62" font-weight="900" text-anchor="middle" fill="#0a0a0a" font-family="Inter, sans-serif">HABIT</text>
+    <text x="260" y="350" font-size="62" font-weight="900" text-anchor="middle" fill="#0a0a0a" font-family="Inter, sans-serif">TRACKER</text>
+    <line x1="100" y1="400" x2="420" y2="400" stroke="#22e0ff" stroke-width="8"/>
+    <text x="260" y="490" font-size="30" font-weight="700" text-anchor="middle" fill="#666" font-family="Inter, sans-serif">2026 EDITION</text>
+    <!-- Checked boxes -->
+    <rect x="130" y="540" width="40" height="40" rx="6" fill="#e8ff3a" stroke="#0a0a0a" stroke-width="3"/>
+    <path d="M 138 562 L 148 572 L 162 552" stroke="#0a0a0a" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <rect x="195" y="540" width="40" height="40" rx="6" fill="#e8ff3a" stroke="#0a0a0a" stroke-width="3"/>
+    <path d="M 203 562 L 213 572 L 227 552" stroke="#0a0a0a" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <rect x="260" y="540" width="40" height="40" rx="6" fill="#e8ff3a" stroke="#0a0a0a" stroke-width="3"/>
+    <path d="M 268 562 L 278 572 L 292 552" stroke="#0a0a0a" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <rect x="325" y="540" width="40" height="40" rx="6" fill="none" stroke="#0a0a0a" stroke-width="3"/>
+  </g>
+</svg>

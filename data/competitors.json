@@ -1,0 +1,59 @@
+{
+  "_doc": "Competitor / reference TikTok posts tracked over time. Same metric schema as performance.json but separate file. Used by agents/learn.mjs to compute benchmarks (median views / save rate / etc) for the niches we're competing in.",
+  "_schema": {
+    "url": "TikTok URL",
+    "handle": "@account",
+    "videoId": "tiktok numeric id",
+    "type": "video | photo",
+    "niche": "string (e.g. philosophy, movie, self-help, gadgets)",
+    "trackedAt": "ISO8601",
+    "duration": "seconds (null for photo posts)",
+    "slideCount": "int (photo posts only)",
+    "title": "string",
+    "description": "string",
+    "hashtags": [
+      "string",
+      "..."
+    ],
+    "bgm": "string (track name / artist)",
+    "metrics": {
+      "views": "int",
+      "likes": "int",
+      "saves": "int",
+      "shares": "int",
+      "comments": "int"
+    },
+    "history": "array of {trackedAt, metrics} for time-series — appended on re-track",
+    "notes": "string"
+  },
+  "competitors": [
+    {
+      "url": "https://www.tiktok.com/@user16704321563266/video/7638482268792556818",
+      "handle": "@user16704321563266",
+      "videoId": "7638482268792556818",
+      "type": "video",
+      "trackedAt": "2026-05-17T03:32:06.439Z",
+      "duration": 1201,
+      "slideCount": null,
+      "title": "#fyp #foryou #movie",
+      "description": "#fyp #foryou #movie",
+      "hashtags": [
+        "fyp",
+        "foryou",
+        "movie"
+      ],
+      "bgm": "original sound - user16704321563266",
+      "uploadDate": "20260511",
+      "metrics": {
+        "views": 854500,
+        "likes": 11900,
+        "saves": 1997,
+        "shares": 160,
+        "comments": 144
+      },
+      "niche": "movie",
+      "notes": "long-form movie content, 20min, 854K views",
+      "history": []
+    }
+  ]
+}

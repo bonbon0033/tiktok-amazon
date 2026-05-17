@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="ja" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@600;700;800;900&family=Noto+Color+Emoji&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0; width: 1080px; height: 1920px;
+        overflow: hidden; background: #0a0a0a;
+        font-family: 'Inter', 'Hiragino Sans', 'Yu Gothic UI', sans-serif;
+        color: #f5f5f5;
+      }
+
+      /* ═══ BACKGROUND ═══ */
+      .bg {
+        position: absolute; inset: 0;
+        width: 1080px; height: 1920px;
+        background: #050505;
+        overflow: hidden;
+      }
+      .bg-aurora {
+        position: absolute; inset: -200px;
+        width: 1480px; height: 2320px;
+        background:
+          radial-gradient(circle at 30% 20%, rgba(232,255,58,0.30), transparent 35%),
+          radial-gradient(circle at 70% 80%, rgba(34,224,255,0.25), transparent 38%),
+          radial-gradient(circle at 50% 50%, rgba(255,52,100,0.18), transparent 42%);
+        filter: blur(40px);
+      }
+      .bg-grid {
+        position: absolute; inset: 0;
+        background-image:
+          linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+        background-size: 60px 60px;
+        mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 70%);
+      }
+      .bg-streak {
+        position: absolute; left: -30%; width: 160%; height: 200px;
+        background: linear-gradient(90deg, transparent, rgba(232,255,58,0.18), transparent);
+        transform: rotate(-20deg);
+      }
+      .bg-streak.s1 { top: 12%; }
+      .bg-streak.s2 { top: 48%; background: linear-gradient(90deg, transparent, rgba(34,224,255,0.14), transparent); }
+      .bg-streak.s3 { top: 78%; background: linear-gradient(90deg, transparent, rgba(255,52,100,0.16), transparent); }
+
+      .particles { position: absolute; inset: 0; pointer-events: none; }
+      .particle {
+        position: absolute;
+        width: 8px; height: 8px;
+        border-radius: 50%;
+        background: #e8ff3a;
+      }
+      .particle.c { background: #22e0ff; width: 6px; height: 6px; }
+      .particle.r { background: #ff3464; width: 5px; height: 5px; }
+
+      /* ═══ PR BADGE ═══ */
+      .pr-badge {
+        position: absolute; top: 50px; right: 40px;
+        background: rgba(255,52,100,0.92); color: #fff;
+        padding: 12px 26px; border-radius: 28px;
+        font-size: 28px; font-weight: 900;
+        letter-spacing: 2px; z-index: 1000;
+      }
+
+      /* ═══ COMMON ═══ */
+      .scene { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+      .scene-content {
+        width: 100%; height: 100%;
+        padding: 130px 60px;
+        display: flex; flex-direction: column;
+        box-sizing: border-box;
+      }
+
+      /* Emoji character overlays */
+      .emoji-char {
+        position: absolute;
+        font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+        z-index: 10;
+        pointer-events: none;
+      }
+
+      /* Glow helpers */
+      .glow-lime { text-shadow: 0 0 24px rgba(232,255,58,0.85), 0 0 56px rgba(232,255,58,0.5); }
+      .glow-cyan { text-shadow: 0 0 24px rgba(34,224,255,0.85), 0 0 56px rgba(34,224,255,0.5); }
+      .glow-red  { text-shadow: 0 0 24px rgba(255,52,100,0.85), 0 0 56px rgba(255,52,100,0.5); }
+      .glow-white { text-shadow: 0 0 18px rgba(255,255,255,0.7), 0 0 48px rgba(255,255,255,0.4); }
+
+      /* ═══ HOOK SCENE ═══ */
+      .scene-hook .scene-content { justify-content: center; align-items: center; gap: 20px; }
+      .hook-warn {
+        font-size: 220px; top: 230px; left: 80px;
+        filter: drop-shadow(0 0 30px rgba(255,52,100,0.7));
+      }
+      .hook-bell {
+        font-size: 160px; top: 280px; right: 80px;
+        filter: drop-shadow(0 0 30px rgba(232,255,58,0.7));
+      }
+      .hook-fire-l { font-size: 130px; bottom: 280px; left: 80px; }
+      .hook-fire-r { font-size: 130px; bottom: 280px; right: 80px; }
+
+      .hook-tagline {
+        font-size: 56px; font-weight: 900; color: #ff3464;
+        letter-spacing: 12px;
+      }
+      .hook-price-big {
+        font-family: 'Anton', 'Inter', sans-serif;
+        font-size: 280px; line-height: 0.85;
+        color: #e8ff3a; letter-spacing: -6px;
+        font-variant-numeric: tabular-nums;
+        text-align: center;
+      }
+      .hook-price-suffix {
+        font-size: 64px; font-weight: 900;
+        color: #f5f5f5; letter-spacing: 6px;
+      }
+      .hook-headline {
+        font-family: 'Anton', 'Inter', sans-serif;
+        font-size: 110px; line-height: 0.95;
+        color: #22e0ff; text-align: center;
+        margin-top: 8px;
+      }
+      .hook-strike {
+        position: absolute; top: 690px; left: 60px;
+        width: 960px; height: 24px;
+        background: linear-gradient(90deg, transparent, #ff3464 30%, #ff3464 70%, transparent);
+        opacity: 0.6;
+      }
+
+      /* ═══ RANK SCENES ═══ */
+      .scene-rank .scene-content {
+        justify-content: flex-start; padding: 130px 60px 50px; gap: 0;
+      }
+      .rank-top-row {
+        display: flex; align-items: flex-end; gap: 28px;
+        margin-bottom: 22px; justify-content: center;
+      }
+      .rank-num {
+        font-family: 'Anton', 'Inter', sans-serif;
+        font-size: 340px; line-height: 0.78;
+        letter-spacing: -8px;
+        font-variant-numeric: tabular-nums;
+        color: #e8ff3a;
+      }
+      .rank-label {
+        font-size: 54px; font-weight: 900; color: #aaa;
+        letter-spacing: 4px; text-transform: uppercase;
+        padding-bottom: 34px;
+      }
+      .product-image-wrap {
+        width: 560px; height: 560px;
+        margin: 0 auto 16px;
+        border-radius: 22px; overflow: hidden;
+        background: #14140a;
+        position: relative;
+        box-shadow: 0 0 0 4px #22e0ff, 0 0 60px rgba(34,224,255,0.4);
+      }
+      .product-image-wrap::after {
+        content: ''; position: absolute; inset: 0;
+        background: linear-gradient(135deg, rgba(232,255,58,0.0) 0%, rgba(232,255,58,0.0) 60%, rgba(232,255,58,0.4) 100%);
+        pointer-events: none;
+      }
+      .product-image-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+      .product-name {
+        font-size: 42px; font-weight: 800; color: #f5f5f5;
+        line-height: 1.15; max-width: 940px; text-align: center;
+        margin: 0 auto 12px;
+        word-break: keep-all;
+      }
+
+      .price-row {
+        display: flex; align-items: baseline; justify-content: center;
+        gap: 22px; margin-bottom: 14px;
+      }
+      .price-big {
+        font-family: 'Anton', 'Inter', sans-serif;
+        font-size: 140px; font-weight: 900;
+        color: #e8ff3a; line-height: 1;
+        font-variant-numeric: tabular-nums;
+      }
+      .price-rating {
+        font-size: 40px; font-weight: 800; color: #22e0ff;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .reason-list {
+        display: flex; flex-direction: column; gap: 12px;
+        max-width: 940px; margin: 0 auto;
+      }
+      .reason {
+        display: flex; align-items: center; gap: 16px;
+        background: rgba(34, 224, 255, 0.12);
+        border-left: 8px solid #22e0ff;
+        padding: 14px 22px; border-radius: 10px;
+        backdrop-filter: blur(6px);
+      }
+      .reason.r-red { background: rgba(255,52,100,0.12); border-left-color: #ff3464; }
+      .reason.r-lime { background: rgba(232,255,58,0.10); border-left-color: #e8ff3a; }
+      .reason-num {
+        font-family: 'Anton', 'Inter', sans-serif;
+        font-size: 60px; color: #22e0ff; line-height: 1;
+        min-width: 54px;
+      }
+      .reason.r-red .reason-num { color: #ff3464; }
+      .reason.r-lime .reason-num { color: #e8ff3a; }
+      .reason-text {
+        font-size: 42px; font-weight: 800; color: #f5f5f5;
+        line-height: 1.15;
+      }
+
+      /* Per-rank emoji character (top-right of scene) */
+      .rank-emoji {
+        font-size: 200px;
+        position: absolute;
+        z-index: 12;
+      }
+      .r3-emoji { top: 200px; right: 60px; filter: drop-shadow(0 0 30px rgba(255,52,100,0.6)); }
+      .r2-emoji { top: 200px; left: 60px; filter: drop-shadow(0 0 30px rgba(34,224,255,0.6)); }
+      .r1-emoji-l { top: 180px; left: 60px; font-size: 180px; filter: drop-shadow(0 0 30px rgba(232,255,58,0.7)); }
+      .r1-emoji-r { top: 180px; right: 60px; font-size: 180px; filter: drop-shadow(0 0 30px rgba(232,255,58,0.7)); }
+
+      /* ═══ CTA SCENE ═══ */
+      .scene-cta .scene-content { justify-content: center; align-items: center; gap: 22px; }
+      .cta-arrow {
+        font-family: 'Anton', 'Inter', sans-serif;
+        font-size: 320px; color: #e8ff3a; line-height: 0.8;
+      }
+      .cta-title {
+        font-family: 'Anton', 'Inter', sans-serif;
+        font-size: 110px; line-height: 0.98;
+        color: #f5f5f5; text-align: center; letter-spacing: -2px;
+      }
+      .cta-sub {
+        font-size: 50px; font-weight: 900;
+        color: #e8ff3a; text-align: center;
+      }
+      .cta-emoji-l { font-size: 180px; top: 300px; left: 90px; }
+      .cta-emoji-r { font-size: 180px; top: 300px; right: 90px; }
+      .cta-tag {
+        position: absolute; top: 220px; left: 50%; transform: translateX(-50%);
+        background: #ff3464; color: #fff;
+        padding: 18px 40px; border-radius: 40px;
+        font-size: 38px; font-weight: 900;
+        letter-spacing: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="top3" data-start="0" data-duration="35" data-width="1080" data-height="1920">
+
+      <!-- ═══ BACKGROUND ═══ -->
+      <div id="bg" class="clip bg" data-start="0" data-duration="35" data-track-index="0">
+        <div class="bg-aurora" id="bg-aurora"></div>
+        <div class="bg-grid"></div>
+        <div class="bg-streak s1" id="streak1"></div>
+        <div class="bg-streak s2" id="streak2"></div>
+        <div class="bg-streak s3" id="streak3"></div>
+        <div class="particles" id="particles">
+          <span class="particle"   style="top: 8%;  left: 12%;"></span>
+          <span class="particle c" style="top: 14%; left: 78%;"></span>
+          <span class="particle"   style="top: 22%; left: 38%;"></span>
+          <span class="particle r" style="top: 26%; left: 88%;"></span>
+          <span class="particle c" style="top: 34%; left: 18%;"></span>
+          <span class="particle"   style="top: 41%; left: 62%;"></span>
+          <span class="particle r" style="top: 48%; left: 30%;"></span>
+          <span class="particle c" style="top: 54%; left: 82%;"></span>
+          <span class="particle"   style="top: 62%; left: 14%;"></span>
+          <span class="particle r" style="top: 68%; left: 70%;"></span>
+          <span class="particle c" style="top: 75%; left: 40%;"></span>
+          <span class="particle"   style="top: 82%; left: 86%;"></span>
+          <span class="particle r" style="top: 88%; left: 24%;"></span>
+          <span class="particle c" style="top: 94%; left: 64%;"></span>
+        </div>
+      </div>
+
+      <div id="pr-badge" class="clip pr-badge" data-start="0" data-duration="35" data-track-index="5">#PR / Amazonアソシエイト</div>
+
+      <!-- ═══ Scene 1: HOOK (0-3.3s) ═══ -->
+      <div id="s-hook" class="clip scene scene-hook" data-start="0" data-duration="3.3" data-track-index="1">
+        <div class="emoji-char hook-warn"  id="e-hook-warn">⚠️</div>
+        <div class="emoji-char hook-bell"  id="e-hook-bell">🔔</div>
+        <div class="emoji-char hook-fire-l" id="e-hook-fire-l">🔥</div>
+        <div class="emoji-char hook-fire-r" id="e-hook-fire-r">🔥</div>
+        <div class="scene-content">
+          <div class="hook-tagline glow-red" id="hook-tagline">⚠ 今買え</div>
+          <div class="hook-price-big glow-lime" id="hook-price">¥4,000</div>
+          <div class="hook-price-suffix" id="hook-price-suffix">以下しばり</div>
+          <div class="hook-headline glow-cyan" id="hook-headline">買い逃すと損する<br/>Amazon TOP3</div>
+        </div>
+      </div>
+
+      <!-- ═══ Scene 2: Rank 3 (3-13.3s) ═══ -->
+      <div id="s-rank3" class="clip scene scene-rank" data-start="3" data-duration="10.3" data-track-index="2">
+        <div class="rank-emoji r3-emoji" id="e-r3">💸</div>
+        <div class="scene-content">
+          <div class="rank-top-row">
+            <div class="rank-num glow-lime" id="r3-num">03</div>
+            <div class="rank-label" id="r3-label">位</div>
+          </div>
+          <div class="product-image-wrap" id="r3-img">
+            <img src="../assets/products/product-3.svg" alt="大岩のいちばんはじめの英文法【超基礎文法編】 (東進ブックス 名人の授業シリーズ" />
+          </div>
+          <div class="product-name glow-white" id="r3-name">大岩のいちばんはじめの英文法【超基礎文法編】 (東進ブックス 名人の授業シリーズ</div>
+          <div class="price-row" id="r3-price-row">
+            <div class="price-big glow-lime" id="r3-price">¥3,100</div>
+            <div class="price-rating glow-cyan" id="r3-rating">★4.4</div>
+          </div>
+          <div class="reason-list" id="r3-reasons">
+            <div class="reason r-red"><div class="reason-num">①</div><div class="reason-text" id="r3-reason1">もうすぐ値上げかも</div></div>
+            <div class="reason"      ><div class="reason-num">②</div><div class="reason-text" id="r3-reason2">今が買い時のラスト</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ Scene 3: Rank 2 (13-23.3s) ═══ -->
+      <div id="s-rank2" class="clip scene scene-rank" data-start="13" data-duration="10.3" data-track-index="1">
+        <div class="rank-emoji r2-emoji" id="e-r2">👀</div>
+        <div class="scene-content">
+          <div class="rank-top-row">
+            <div class="rank-num glow-lime" id="r2-num">02</div>
+            <div class="rank-label" id="r2-label">位</div>
+          </div>
+          <div class="product-image-wrap" id="r2-img">
+            <img src="../assets/products/product-2.svg" alt="英単語ターゲット1900 6訂版 (大学JUKEN新書)" />
+          </div>
+          <div class="product-name glow-white" id="r2-name">英単語ターゲット1900 6訂版 (大学JUKEN新書)</div>
+          <div class="price-row" id="r2-price-row">
+            <div class="price-big glow-lime" id="r2-price">¥2,300</div>
+            <div class="price-rating glow-cyan" id="r2-rating">★4.4</div>
+          </div>
+          <div class="reason-list" id="r2-reasons">
+            <div class="reason"      ><div class="reason-num">①</div><div class="reason-text" id="r2-reason1">99%は気づいてない</div></div>
+            <div class="reason r-lime"><div class="reason-num">②</div><div class="reason-text" id="r2-reason2">気づいた人だけ得してる</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ Scene 4: Rank 1 (23-32.3s) ═══ -->
+      <div id="s-rank1" class="clip scene scene-rank" data-start="23" data-duration="9.3" data-track-index="2">
+        <div class="rank-emoji r1-emoji-l" id="e-r1-l">🏆</div>
+        <div class="rank-emoji r1-emoji-r" id="e-r1-r">💎</div>
+        <div class="scene-content">
+          <div class="rank-top-row">
+            <div class="rank-num glow-lime" id="r1-num">01</div>
+            <div class="rank-label" id="r1-label">位</div>
+          </div>
+          <div class="product-image-wrap" id="r1-img">
+            <img src="../assets/products/product-1.svg" alt="TOEIC L&amp;Rテスト 文法問題 でる1000問" />
+          </div>
+          <div class="product-name glow-lime" id="r1-name">TOEIC L&amp;Rテスト 文法問題 でる1000問</div>
+          <div class="price-row" id="r1-price-row">
+            <div class="price-big glow-lime" id="r1-price">¥1,500</div>
+            <div class="price-rating glow-cyan" id="r1-rating">★4.5</div>
+          </div>
+          <div class="reason-list" id="r1-reasons">
+            <div class="reason r-red"><div class="reason-num">①</div><div class="reason-text" id="r1-reason1">今買わないと一生後悔</div></div>
+            <div class="reason r-lime"><div class="reason-num">②</div><div class="reason-text" id="r1-reason2">TikTokで爆売れ中</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ Scene 5: CTA (32-35s) ═══ -->
+      <div id="s-cta" class="clip scene scene-cta" data-start="32" data-duration="3" data-track-index="1">
+        <div class="emoji-char cta-emoji-l" id="e-cta-siren">🚨</div>
+        <div class="emoji-char cta-emoji-r" id="e-cta-clock">⏰</div>
+        <div class="cta-tag" id="cta-tag">URGENT</div>
+        <div class="scene-content">
+          <div class="cta-arrow glow-lime" id="cta-arrow">↑</div>
+          <div class="cta-title glow-white" id="cta-title">今すぐ<br/>プロフから</div>
+          <div class="cta-sub glow-lime" id="cta-sub">明日には値上げかも</div>
+        </div>
+      </div>
+
+      <!-- ═══ Audio narration ═══ -->
+      <audio id="aud-hook" class="clip" data-start="0.3"  data-duration="2.8" data-track-index="3" src="../assets/audio/top3/01-hook.mp3"></audio>
+      <audio id="aud-r3"   class="clip" data-start="3.4"  data-duration="6.0" data-track-index="3" src="../assets/audio/top3/02-rank3.mp3"></audio>
+      <audio id="aud-r2"   class="clip" data-start="13.4" data-duration="6.0" data-track-index="3" src="../assets/audio/top3/03-rank2.mp3"></audio>
+      <audio id="aud-r1"   class="clip" data-start="23.4" data-duration="6.0" data-track-index="3" src="../assets/audio/top3/04-rank1.mp3"></audio>
+      <audio id="aud-cta"  class="clip" data-start="32.2" data-duration="2.5" data-track-index="3" src="../assets/audio/top3/05-cta.mp3"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // ─── BACKGROUND continuous motion (finite repeat) ───
+      // Aurora drifts: 35s / 7s cycle = 5 repeats
+      tl.to('#bg-aurora', {
+        keyframes: [
+          { x: 0, y: 0, scale: 1.0 },
+          { x: -40, y: 30, scale: 1.05 },
+          { x: 30, y: -20, scale: 1.0 },
+          { x: 0, y: 0, scale: 1.0 },
+        ],
+        duration: 7, ease: 'sine.inOut', repeat: 4,
+      }, 0);
+
+      // Streaks drift
+      tl.to('#streak1', { x: 220, duration: 5, ease: 'sine.inOut', yoyo: true, repeat: 6 }, 0);
+      tl.to('#streak2', { x: -250, duration: 6, ease: 'sine.inOut', yoyo: true, repeat: 5 }, 0);
+      tl.to('#streak3', { x: 180, duration: 5.5, ease: 'sine.inOut', yoyo: true, repeat: 5 }, 0);
+
+      // Particles drift (subtle individual motion)
+      const particles = document.querySelectorAll('.particle');
+      particles.forEach((p, i) => {
+        const dy = (i % 3 === 0 ? 30 : i % 3 === 1 ? -20 : 25);
+        const dx = (i % 2 === 0 ? 15 : -18);
+        tl.to(p, {
+          y: dy, x: dx, opacity: 0.4,
+          duration: 3 + (i % 4) * 0.5,
+          ease: 'sine.inOut', yoyo: true,
+          repeat: Math.ceil(35 / (3 + (i % 4) * 0.5)) - 1,
+        }, 0);
+      });
+
+      // ─── HOOK SCENE (0-3.3s) ───
+      tl.from('#s-hook',           { opacity: 0, duration: 0.25, ease: 'power2.out' }, 0);
+      tl.from('#e-hook-warn',      { scale: 0, rotation: -120, opacity: 0, duration: 0.5, ease: 'back.out(2.5)' }, 0.05);
+      tl.from('#e-hook-bell',      { scale: 0, rotation: 90, opacity: 0, duration: 0.5, ease: 'back.out(2.5)' }, 0.15);
+      tl.from('#e-hook-fire-l',    { y: 100, scale: 0, opacity: 0, duration: 0.45, ease: 'back.out(2)' }, 0.25);
+      tl.from('#e-hook-fire-r',    { y: 100, scale: 0, opacity: 0, duration: 0.45, ease: 'back.out(2)' }, 0.30);
+      tl.from('#hook-tagline',     { y: -30, opacity: 0, duration: 0.4, ease: 'power2.out' }, 0.15);
+      tl.from('#hook-price',       { scale: 1.8, opacity: 0, duration: 0.55, ease: 'back.out(2.5)' }, 0.45);
+      tl.from('#hook-price-suffix',{ y: 30, opacity: 0, duration: 0.4, ease: 'expo.out' }, 0.75);
+      tl.from('#hook-headline',    { y: 50, opacity: 0, duration: 0.5, ease: 'power3.out' }, 1.05);
+
+      // Hook pulse + bell shake (finite)
+      tl.to('#hook-price', { scale: 1.04, duration: 0.4, ease: 'sine.inOut', yoyo: true, repeat: 4 }, 1.1);
+      tl.to('#e-hook-bell', { rotation: -20, duration: 0.18, ease: 'power2.inOut', yoyo: true, repeat: 9 }, 0.7);
+      tl.to('#e-hook-warn', { scale: 1.1, duration: 0.3, ease: 'sine.inOut', yoyo: true, repeat: 5 }, 0.8);
+      tl.to('#e-hook-fire-l', { y: -8, rotation: -8, duration: 0.4, ease: 'sine.inOut', yoyo: true, repeat: 5 }, 0.7);
+      tl.to('#e-hook-fire-r', { y: -8, rotation: 8, duration: 0.4, ease: 'sine.inOut', yoyo: true, repeat: 5 }, 0.7);
+
+      // ─── Generic rank scene with pulses + emoji animation ───
+      function rankScene(t, prefix, opts) {
+        tl.from(`#s-rank${prefix}`,        { opacity: 0, duration: 0.3, ease: 'power2.out' }, t);
+        if (opts.emojiSelector) {
+          tl.from(opts.emojiSelector, { scale: 0, rotation: opts.emojiRot || 30, opacity: 0, duration: 0.55, ease: 'back.out(2.5)' }, t + 0.05);
+        }
+        if (opts.emojiSelector2) {
+          tl.from(opts.emojiSelector2, { scale: 0, rotation: -(opts.emojiRot || 30), opacity: 0, duration: 0.55, ease: 'back.out(2.5)' }, t + 0.1);
+        }
+        tl.from(`#r${prefix}-num`,         { scale: 1.8, opacity: 0, duration: 0.55, ease: 'back.out(2)' }, t + 0.1);
+        tl.from(`#r${prefix}-label`,       { x: -50, opacity: 0, duration: 0.4, ease: 'expo.out' }, t + 0.3);
+        tl.from(`#r${prefix}-img`,         { y: 60, scale: 0.92, opacity: 0, duration: 0.5, ease: 'power3.out' }, t + 0.4);
+        tl.from(`#r${prefix}-name`,        { y: 30, opacity: 0, duration: 0.4, ease: 'power2.out' }, t + 0.7);
+        tl.from(`#r${prefix}-price-row`,   { scale: 0.5, opacity: 0, duration: 0.55, ease: 'back.out(2)' }, t + 1.0);
+        tl.from(`#r${prefix}-reasons .reason:nth-child(1)`, { x: -80, opacity: 0, duration: 0.5, ease: 'expo.out' }, t + 1.5);
+        tl.from(`#r${prefix}-reasons .reason:nth-child(2)`, { x: -80, opacity: 0, duration: 0.5, ease: 'expo.out' }, t + 2.0);
+
+        // Idle pulses during the rest of the scene
+        const idleStart = t + 2.6;
+        const idleDur = (t + 9.5) - idleStart;
+        if (idleDur > 1.5) {
+          const cycle = 1.4;
+          const reps = Math.ceil(idleDur / cycle) - 1;
+          tl.to(`#r${prefix}-num`,   { scale: 1.06, duration: cycle / 2, ease: 'sine.inOut', yoyo: true, repeat: reps }, idleStart);
+          tl.to(`#r${prefix}-price`, { scale: 1.04, duration: cycle / 2, ease: 'sine.inOut', yoyo: true, repeat: reps }, idleStart + 0.2);
+          if (opts.emojiSelector) {
+            tl.to(opts.emojiSelector, { rotation: opts.emojiWobble || 12, duration: cycle / 2, ease: 'sine.inOut', yoyo: true, repeat: reps }, idleStart);
+          }
+          if (opts.emojiSelector2) {
+            tl.to(opts.emojiSelector2, { rotation: -(opts.emojiWobble || 12), duration: cycle / 2, ease: 'sine.inOut', yoyo: true, repeat: reps }, idleStart + 0.3);
+          }
+        }
+      }
+
+      rankScene(3,  '3', { emojiSelector: '#e-r3', emojiRot: 30, emojiWobble: 14 });
+      rankScene(13, '2', { emojiSelector: '#e-r2', emojiRot: -30, emojiWobble: -10 });
+      rankScene(23, '1', { emojiSelector: '#e-r1-l', emojiSelector2: '#e-r1-r', emojiRot: 25, emojiWobble: 10 });
+
+      // ─── CTA SCENE (32-35s) ───
+      tl.from('#s-cta',        { opacity: 0, duration: 0.3, ease: 'power2.out' }, 32);
+      tl.from('#cta-tag',      { scale: 0, opacity: 0, duration: 0.4, ease: 'back.out(2.5)' }, 32.1);
+      tl.from('#e-cta-siren',  { scale: 0, rotation: -30, opacity: 0, duration: 0.45, ease: 'back.out(2.5)' }, 32.15);
+      tl.from('#e-cta-clock',  { scale: 0, rotation: 30, opacity: 0, duration: 0.45, ease: 'back.out(2.5)' }, 32.2);
+      tl.from('#cta-arrow',    { y: 80, opacity: 0, duration: 0.5, ease: 'back.out(2)' }, 32.25);
+      tl.from('#cta-title',    { y: 40, opacity: 0, duration: 0.4, ease: 'power3.out' }, 32.4);
+      tl.from('#cta-sub',      { y: 25, opacity: 0, duration: 0.35, ease: 'expo.out' }, 32.65);
+
+      // CTA pulses + flashes
+      tl.to('#cta-arrow',   { y: -16, duration: 0.25, ease: 'sine.inOut', yoyo: true, repeat: 7 }, 32.5);
+      tl.to('#cta-tag',     { scale: 1.06, duration: 0.22, ease: 'sine.inOut', yoyo: true, repeat: 7 }, 32.5);
+      tl.to('#e-cta-siren', { rotation: 16, duration: 0.22, ease: 'sine.inOut', yoyo: true, repeat: 7 }, 32.5);
+      tl.to('#e-cta-clock', { rotation: -16, duration: 0.22, ease: 'sine.inOut', yoyo: true, repeat: 7 }, 32.5);
+
+      // Final fade-out (last scene only — allowed)
+      tl.to('#s-cta', { opacity: 0, duration: 0.4, ease: 'power2.in' }, 34.5);
+
+      window.__timelines['top3'] = tl;
+    </script>
+  </body>
+</html>

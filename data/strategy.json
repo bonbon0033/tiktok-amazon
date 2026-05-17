@@ -1,0 +1,53 @@
+{
+  "updatedAt": "2026-05-17T08:47:57.768Z",
+  "basedOn": 0,
+  "windowDays": 0,
+  "byHookFormula": {},
+  "byCategory": {},
+  "byVideoType": {},
+  "byPlatform": {},
+  "topHooks": [
+    "F06",
+    "F09",
+    "F07"
+  ],
+  "topCategories": [
+    "books",
+    "stationery"
+  ],
+  "topVideoTypes": [
+    "ranking",
+    "story"
+  ],
+  "recommendations": [
+    "No posts logged yet — using cold-start defaults from research/docs.",
+    "Log first 3-5 posts with scripts/log-post.mjs then re-run learn."
+  ],
+  "competitorBenchmark": {
+    "total": 1,
+    "byNiche": {
+      "movie": {
+        "n": 1,
+        "medianViews": 854500,
+        "medianSaveRate": 0.0023,
+        "medianLikeRate": 0.0139,
+        "medianShareRate": 0.0002,
+        "types": {
+          "video": 1
+        },
+        "topBgm": "original sound"
+      }
+    },
+    "overall": {
+      "n": 1,
+      "medianViews": 854500,
+      "medianSaveRate": 0.0023,
+      "medianLikeRate": 0.0139,
+      "medianShareRate": 0.0002,
+      "types": {
+        "video": 1
+      },
+      "topBgm": "original sound"
+    }
+  }
+}

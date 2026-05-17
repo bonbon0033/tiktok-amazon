@@ -1,0 +1,27 @@
+{
+  "_doc": "Posted-video KPI log. Append one entry per video after 48-72h of metrics. Used by agents/learn.mjs to score hook formulas, categories, and video types.",
+  "_schema": {
+    "videoId": "week-YYYYMMDD-<rank|story|top3|...>",
+    "postedAt": "ISO8601",
+    "platform": "tiktok | youtube-shorts | instagram-reels",
+    "videoType": "ranking | story | top3 | slideshow",
+    "theme": "string (e.g. 自己啓発, ガジェット)",
+    "category": "books | stationery | gadgets | beauty | kitchen | fashion | misc",
+    "hookId": "A | B | C",
+    "hookFormulaId": "F01-F15",
+    "hookText": "string (actual on-screen text)",
+    "products": ["ASIN", "..."],
+    "metrics": {
+      "views": "int",
+      "likes": "int",
+      "saves": "int",
+      "shares": "int",
+      "comments": "int",
+      "linkClicks": "int (Linktree analytics)",
+      "purchases": "int (Amazon Associates report)",
+      "revenueJpy": "int"
+    },
+    "notes": "string (qualitative observations)"
+  },
+  "posts": []
+}
