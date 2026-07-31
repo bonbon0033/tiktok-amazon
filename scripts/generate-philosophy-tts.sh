@@ -27,7 +27,14 @@ TEXT="もし宇宙の果てを見たら、あなたは何を思うだろうか�
 プロフのリンクから、続きを読もう。"
 
 echo "[tts] philosophy-narration.mp3"
-python -m edge_tts \
+# Prefer project-local venv: on Windows the PATH python lacks edge_tts and
+# Scripts/*.exe launchers fail silently under Git Bash.
+if [ -x ".venv-tts/Scripts/python" ]; then
+  PYTTS=".venv-tts/Scripts/python"
+else
+  PYTTS="python"
+fi
+"$PYTTS" -m edge_tts \
   --voice="$VOICE" \
   --rate="$RATE" \
   --pitch="$PITCH" \

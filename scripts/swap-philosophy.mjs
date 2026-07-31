@@ -17,15 +17,18 @@ const html = fs.readFileSync(path.join(root, 'philosophy-slide/index.html'), 'ut
 const b = data.currentBook;
 const bookLine = `『${b.title}』<br>${b.author} 著`;
 
-const replaced = html.replace(
-  /<span class="small" id="book-title">[\s\S]*?<\/span>/,
-  `<span class="small" id="book-title">${bookLine}</span>`
-);
-
-if (replaced === html) {
+const re = /<span class="small" id="book-title">[\s\S]*?<\/span>/;
+if (!re.test(html)) {
   console.error('[swap] WARNING: book-title span not found. Composition unchanged.');
   process.exit(1);
 }
+
+// Note: replacement may be identical to current content on re-runs with the
+// same book — that is a valid no-op, not a "not found" error.
+const replaced = html.replace(
+  re,
+  `<span class="small" id="book-title">${bookLine}</span>`
+);
 
 fs.writeFileSync(path.join(root, 'philosophy-slide/index.html'), replaced);
 console.log(`[swap] book → 『${b.title}』 ${b.author}`);
